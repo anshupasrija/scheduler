@@ -1,27 +1,28 @@
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import axios from 'axios';
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-const [day, setDay] = useState('Monday');
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+
+// const days = [
+//   {
+//     id: 1,
+//     name: "Monday",
+//     spots: 2,
+//   },
+//   {
+//     id: 2,
+//     name: "Tuesday",
+//     spots: 5,
+//   },
+//   {
+//     id: 3,
+//     name: "Wednesday",
+//     spots: 0,
+//   },
+// ];
 
 const appointments = [
   {
@@ -71,6 +72,16 @@ const appointments = [
 ];
 
 export default function Application(props) {
+  // const [day, setDay] = useState('Monday');
+  const [days, setDays] = useState([]);
+
+  useEffect(()=>{
+    axios.get('/api/days')
+    .then((response=>{
+      console.log(response);
+    }))
+  },[])
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -84,8 +95,8 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={days}
-            day={day}
-            setDay={(day) => setDay(day)}
+            // day={day}
+            setDay={(days) => setDays(days)}
             // setDay={setDay} />
           />
         </nav>
@@ -97,15 +108,12 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
-        {appointments.map(appointment=>(        
-            <div>
+        
+        {appointments.map(appointment=>(                 
               <Appointment key={appointment.id} 
                 id={appointment.id} 
                 time={appointment.time} 
-                interview={appointment.interview} />
-                {/* <Appointment key={appointment.id} {...appointment} /> */}
-            </div>
-         
+                interview={appointment.interview} />                       
         ))}
 
       </section>

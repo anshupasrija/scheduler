@@ -38,36 +38,24 @@ export default function Application(props) {
       appointments, // taking previous state and only update the appointment
     });
     return axios.put(`/api/appointments/${id}`, { interview }).then((data) => {
-      console.log("this is data", data);
-      setState({
-        ...state,
-        appointments,
-      });
+     if (data.status ===204) setState({...state, appointments});
     });
   }
 
-  function cancelInterview(id,interview) {
+  const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
-      interview:{ ...interview,interview:null },
+      interview: null
     };
     const appointments = {
       ...state.appointments,
-      [id]:appointment,
+      [id]: appointment
     };
-    setState({
-      ...state,
-      appointments, // taking previous state and only update the appointment
-    });
-    return axios.delete(`/api/appointments/${id}`, { interview })
-    .then((data) => {
-      console.log("this is data", data);
-      setState({
-        ...state,
-        appointments,
-      });
-    });
-  }
+    return axios.delete(`/api/appointments/${id}`, appointment)
+      .then(response => {
+        if (response.status === 204) setState({ ...state, appointments })
+      })
+  };
 
   
   

@@ -30,6 +30,10 @@ export default function useApplicationData(props) {
     });
   }, []);
 
+  // function updateSpot(day){
+  //   return 3;
+  // }
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -40,15 +44,18 @@ export default function useApplicationData(props) {
       [id]: appointment, // it will update the appoint acc. to the passed id;
     };
 
-    setState({
-      ...state,
-      appointments, // taking previous state and only update the appointment
-    });
     return axios.put(`/api/appointments/${id}`, { interview }).then((data) => {
-      if (data.status === 204) setState({ ...state, appointments });
+      if (data.status === 204) {       
+        const newdays = state.days.map((item) => {
+          return item.name === state.day
+            ? { ...item, spots: item.spots - 1 }
+            : item;
+        });
+        setState({ ...state, appointments, days: newdays });
+      }
     });
   }
-
+//if we muting object then you call the setstate it do does the job but better to give a new object . if we mutate directly then react engine might not detect a change in the node
   const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
@@ -61,7 +68,15 @@ export default function useApplicationData(props) {
     return axios
       .delete(`/api/appointments/${id}`, appointment)
       .then((response) => {
-        if (response.status === 204) setState({ ...state, appointments });
+        if (response.status === 204) {
+          // const newSpot = updateSpot(state.day)
+          const newdays = state.days.map((item) => {
+            return item.name === state.day
+              ? { ...item, spots: item.spots + 1 }
+              : item;
+          });
+          setState({ ...state, appointments, days: newdays });
+        }
       });
   };
 
@@ -84,7 +99,6 @@ export default function useApplicationData(props) {
     state,
     setDay,
     bookInterview,
-    cancelInterview
-  }
-   
+    cancelInterview,
+  };
 }

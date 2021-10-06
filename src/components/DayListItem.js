@@ -15,7 +15,7 @@ return `${spots} spots remaining`;
 }
 
 export default function DayListItem(props) {
-  // console.log(props);
+  console.log(props);
   const availabilityMessage = formatSpots(props.spots);
   const dayClass = classNames("day-list__item", {
     "day-list__item--selected": props.selected,

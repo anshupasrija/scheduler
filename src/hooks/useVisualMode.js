@@ -12,8 +12,7 @@ export default function useVisualMode(initial) {
     if(!replace){
     setHistory((prev)=>[...prev,newMode])  // setting the history, prev is getting the mode value
     setMode(newMode);     
-     // This feature will require the addition of a replace argument on the transition function. When replace is true then set the history to reflect that we are replacing the current mode.
-        
+     // This feature will require the addition of a replace argument on the transition function. When replace is true then set the history to reflect that we are replacing the current mode.        
     } else{
       setMode(newMode);
     } 
@@ -21,9 +20,9 @@ export default function useVisualMode(initial) {
   const back= ()=>{
     // history =[1,2,3]   
     if(history.length>1) {      
-    history.pop();
-    setMode (history[history.length-1]);
-    setHistory((prev)=>[...prev]) 
+    const newHistory=history.slice(0,history.length-1);
+    setMode (newHistory[newHistory.length -1]);
+    setHistory(newHistory);
   }
 }
 

@@ -53,5 +53,10 @@
       "<rootDir>/.git/"
     ]
   },
+  "eslintConfig": {
+    "extends": [
+      "plugin:cypress/recommended"
+    ]
+  },
   "proxy": "http://localhost:8001"
 }

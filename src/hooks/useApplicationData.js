@@ -30,10 +30,6 @@ export default function useApplicationData(props) {
     });
   }, []);
 
-  // function updateSpot(day){
-  //   return 3;
-  // }
-
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -45,7 +41,7 @@ export default function useApplicationData(props) {
     };
 
     return axios.put(`/api/appointments/${id}`, { interview }).then((data) => {
-      if (data.status === 204) {       
+      if (data.status === 204) {
         const newdays = state.days.map((item) => {
           return item.name === state.day
             ? { ...item, spots: item.spots - 1 }
@@ -55,7 +51,7 @@ export default function useApplicationData(props) {
       }
     });
   }
-//if we muting object then you call the setstate it do does the job but better to give a new object . if we mutate directly then react engine might not detect a change in the node
+  //if we muting object then you call the setstate it do does the job but better to give a new object . if we mutate directly then react engine might not detect a change in the node
   const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
@@ -69,7 +65,6 @@ export default function useApplicationData(props) {
       .delete(`/api/appointments/${id}`, appointment)
       .then((response) => {
         if (response.status === 204) {
-          // const newSpot = updateSpot(state.day)
           const newdays = state.days.map((item) => {
             return item.name === state.day
               ? { ...item, spots: item.spots + 1 }
@@ -79,21 +74,6 @@ export default function useApplicationData(props) {
         }
       });
   };
-
-  // useEffect(() => {
-  //   axios.get("/api/days").then((response) => {
-  //     console.log(response.data);
-  //     // response.data = [1,2,3]
-  //     // Now, we need to update our state so we have {...state, days: [1,2,3]} as the new state
-  //     setDays(response.data); // exactly the same as setState({...state, days: response.data})
-  //   });
-  // }, []);
-
-  // const setDays = (days) => { //days = response.data
-  //   //... your code here ...
-  //   // setState({ ...state, days }); // setState({...state, days: response.data})
-  //   setState(prev => ({ ...prev, days })); // prev refers to the immediate previous state
-  // };
 
   return {
     state,

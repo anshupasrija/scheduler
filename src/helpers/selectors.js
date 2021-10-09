@@ -55,15 +55,10 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-  // console.log("interview from parameters", interview);
-  // console.log("condition", !interview || !interview.interviewer);
-
   if (!interview || !interview.interviewer) {
     return null;
   }
   const interviewerId = interview.interviewer;
-  // interviewers[interviewerId]
-  // console.log("interview id ", interviewers[interviewerId]);
   return {
     student: interview.student,
     interviewer: state.interviewers[interviewerId],
@@ -73,17 +68,14 @@ export function getInterview(state, interview) {
 export function getInterviewersForDay(state, day) {
   const foundDay = state.days.find((obj) => obj.name === day);
   if (foundDay === undefined) {
-    console.log('we are here');
+    console.log("we are here");
     return [];
   }
   console.log(foundDay);
   const interviewers = foundDay.interviewers.map(
     (id) => state.interviewers[id]
-   
   );
   return interviewers;
 }
 
-// const interview = getInterviewersForDay(state, state.appointments[5].interview);
-// console.log("interview data ", interview);
 

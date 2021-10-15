@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 export default function Status(props) {
-  console.log('props from status',props)
+  console.log("props from status", props);
   return (
     <main className="appointment__card appointment__card--status">
       <img
@@ -13,5 +13,3 @@ export default function Status(props) {
     </main>
   );
 }
-
-

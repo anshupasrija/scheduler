@@ -10,10 +10,10 @@ export default function useApplicationData(props) {
   });
 
   const setDay = (day) => setState({ ...state, day });
-
-  const getDays = "http://localhost:8001/api/days";
-  const getAppointment = "http://localhost:8001/api/appointments";
-  const getInterviewers = "http://localhost:8001/api/interviewers";
+  const API_URL= process.env.NODE_ENV === "production" ? "https://scheduler-api-project.herokuapp.com":"http://localhost:8001";
+  const getDays = `${API_URL}/api/days`;
+  const getAppointment = `${API_URL}/api/appointments`;
+  const getInterviewers =`${API_URL}/api/interviewers`;
   useEffect(() => {
     Promise.all([
       axios.get(getDays),
